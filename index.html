@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<title>The Castle of Shadows - Victor, Igor & Spooky's Quest</title>
+	<meta name="description" content="Join Victor, Igor, and Spooky as they battle the faceless evil and Mary Shelley's ghost to save their town" />
+	<link rel="icon" type="image/png" href="assets/images/favicon.png" />
+	<style>
+		/* Basic styling - simplified from the original template */
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: 'Arial', sans-serif;
+			background: linear-gradient(135deg, #1a1a2e, #16213e);
+			color: #fff;
+			line-height: 1.6;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		header {
+			text-align: center;
+			padding: 2rem 0;
+			background: rgba(0,0,0,0.8);
+		}
+
+		nav ul {
+			list-style: none;
+			display: flex;
+			justify-content: center;
+			gap: 2rem;
+			margin-top: 1rem;
+		}
+
+		nav a {
+			color: #fff;
+			text-decoration: none;
+			padding: 0.5rem 1rem;
+			border-radius: 4px;
+			position: relative;
+			overflow: hidden;
+			transition: all 0.3s ease;
+			cursor: pointer;
+		}
+
+		nav a:hover {
+			background: rgba(139,0,0,0.3);
+			transform: translateY(-2px);
+			box-shadow: 0 8px 20px rgba(139,0,0,0.4);
+			color: #ffd700;
+		}
+
+		/* Flying bat effect on hover */
+		nav a:hover::before {
+			content: '🦇';
+			position: absolute;
+			top: -10px;
+			left: -10px;
+			animation: flyBat 0.8s ease-out forwards;
+			pointer-events: none;
+			font-size: 1.2rem;
+		}
+
+		nav a:hover::after {
+			content: '🦇';
+			position: absolute;
+			top: -10px;
+			right: -10px;
+			animation: flyBat 0.8s ease-out forwards 0.2s;
+			pointer-events: none;
+			font-size: 1.2rem;
+		}
+
+		@keyframes flyBat {
+			0% {
+				opacity: 1;
+				transform: translate(0, 0) rotate(0deg);
+			}
+			50% {
+				opacity: 0.8;
+				transform: translate(10px, -20px) rotate(15deg);
+			}
+			100% {
+				opacity: 0;
+				transform: translate(30px, -40px) rotate(30deg);
+			}
+		}
+
+		/* Click effect */
+		nav a:active {
+			transform: translateY(0) scale(0.95);
+			background: rgba(139,0,0,0.6);
+		}
+
+		section {
+			padding: 4rem 0;
+			min-height: 80vh;
+			transition: all 0.6s ease-in-out;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.active {
+			display: block;
+			animation: fadeSlideIn 0.6s ease-out;
+		}
+
+		.inactive {
+			display: none;
+		}
+
+		@keyframes fadeSlideIn {
+			0% {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			100% {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* Floating bats decoration */
+		.floating-bats {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			z-index: 1;
+		}
+
+		.bat {
+			position: absolute;
+			font-size: 1.5rem;
+			animation: floatAround 15s infinite linear;
+			opacity: 0.3;
+		}
+
+		.bat:nth-child(1) { animation-delay: 0s; left: 10%; }
+		.bat:nth-child(2) { animation-delay: 2s; left: 30%; animation-duration: 18s; }
+		.bat:nth-child(3) { animation-delay: 4s; left: 50%; animation-duration: 12s; }
+		.bat:nth-child(4) { animation-delay: 6s; left: 70%; }
+		.bat:nth-child(5) { animation-delay: 8s; left: 90%; animation-duration: 20s; }
+
+		@keyframes floatAround {
+			0% {
+				transform: translateY(100vh) rotate(0deg);
+			}
+			25% {
+				transform: translateY(75vh) translateX(-50px) rotate(90deg);
+			}
+			50% {
+				transform: translateY(50vh) translateX(50px) rotate(180deg);
+			}
+			75% {
+				transform: translateY(25vh) translateX(-30px) rotate(270deg);
+			}
+			100% {
+				transform: translateY(-10vh) rotate(360deg);
+			}
+		}
+
+		/* Spooky ghosts */
+		.ghost {
+			position: absolute;
+			font-size: 2rem;
+			animation: ghostFloat 10s infinite ease-in-out;
+			opacity: 0.2;
+		}
+
+		.ghost:nth-child(6) { animation-delay: 1s; right: 10%; animation-duration: 14s; }
+		.ghost:nth-child(7) { animation-delay: 3s; right: 60%; animation-duration: 16s; }
+
+		@keyframes ghostFloat {
+			0%, 100% {
+				transform: translateY(0px) rotate(0deg);
+			}
+			50% {
+				transform: translateY(-30px) rotate(5deg);
+			}
+		}
+
+		.hero {
+			text-align: center;
+			background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/images/spookyville.jpg');
+			background-size: cover;
+			background-position: center;
+			padding: 6rem 0;
+		}
+
+		.hero h1 {
+			font-size: 3.5rem;
+			margin-bottom: 1rem;
+			text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+		}
+
+		.hero p {
+			font-size: 1.2rem;
+			margin-bottom: 2rem;
+			text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+		}
+
+		.characters-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 2rem;
+			margin-top: 2rem;
+		}
+
+		.character-card {
+			background: rgba(255,255,255,0.1);
+			border-radius: 8px;
+			padding: 2rem;
+			text-align: center;
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255,255,255,0.2);
+		}
+
+		.character-card img {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			object-fit: cover;
+			margin-bottom: 1rem;
+		}
+
+		.villain-card {
+			background: rgba(139,0,0,0.2);
+			border-radius: 8px;
+			padding: 2rem;
+			text-align: center;
+			backdrop-filter: blur(10px);
+			border: 2px solid rgba(139,0,0,0.5);
+			margin-bottom: 2rem;
+		}
+
+		.villain-card img {
+			width: 200px;
+			height: 200px;
+			border-radius: 10px;
+			object-fit: cover;
+			margin-bottom: 1rem;
+			border: 2px solid rgba(139,0,0,0.8);
+		}
+
+		.story-image {
+			width: 100%;
+			max-width: 400px;
+			height: 250px;
+			object-fit: cover;
+			border-radius: 8px;
+			margin: 1rem auto;
+			display: block;
+			border: 2px solid rgba(255,215,0,0.3);
+		}
+
+		.story-section {
+			background: rgba(0,0,0,0.5);
+			border-radius: 12px;
+			padding: 3rem;
+			margin: 2rem 0;
+		}
+
+		.btn {
+			display: inline-block;
+			background: #8B0000;
+			color: white;
+			padding: 12px 24px;
+			text-decoration: none;
+			border-radius: 6px;
+			transition: background 0.3s;
+		}
+
+		.btn:hover {
+			background: #A52A2A;
+		}
+
+		footer {
+			background: rgba(0,0,0,0.9);
+			text-align: center;
+			padding: 2rem 0;
+			margin-top: 4rem;
+		}
+
+		h2 {
+			font-size: 2.5rem;
+			margin-bottom: 2rem;
+			text-align: center;
+			color: #ffd700;
+		}
+
+		h3 {
+			font-size: 1.8rem;
+			margin-bottom: 1rem;
+			color: #ffd700;
+		}
+
+		.active {
+			display: block;
+		}
+
+		.inactive {
+			display: none;
+		}
+
+		#smartblock-placeholder-wrapper {
+			min-height: 137px;
+			min-width: 150px;
+			max-height: 225px;
+			max-width: 400px;
+			padding: 32px 24px;
+			display: block;
+			align-content: center;
+			text-align: center;
+			background-color: light-dark(rgb(255, 255, 255), rgb(28, 27, 34));
+			color: light-dark(rgb(43, 42, 51), rgb(251, 251, 254));
+			border-radius: 8px;
+			border: 2px dashed #0250bb;
+			font-size: 14px;
+			line-height: 1.2;
+			font-family: system-ui;
+		}
+
+		/* Store styling */
+		.store-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 2rem;
+			margin-top: 2rem;
+		}
+
+		.product-card {
+			background: rgba(139,0,0,0.1);
+			border-radius: 12px;
+			padding: 1.5rem;
+			text-align: center;
+			border: 2px solid rgba(139,0,0,0.3);
+			transition: all 0.3s ease;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.product-card:hover {
+			transform: translateY(-5px) scale(1.02);
+			border-color: rgba(255,215,0,0.6);
+			box-shadow: 0 10px 30px rgba(139,0,0,0.3);
+		}
+
+		.product-card:hover::before {
+			content: '🦇✨';
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			animation: sparkle 1s ease-in-out infinite;
+		}
+
+		@keyframes sparkle {
+			0%, 100% { opacity: 0.5; transform: scale(1); }
+			50% { opacity: 1; transform: scale(1.2); }
+		}
+
+		.product-image {
+			width: 100%;
+			height: 150px;
+			background: rgba(255,255,255,0.1);
+			border-radius: 8px;
+			margin-bottom: 1rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 3rem;
+			border: 2px dashed rgba(255,215,0,0.3);
+		}
+
+		.product-price {
+			color: #ffd700;
+			font-size: 1.2rem;
+			font-weight: bold;
+			margin: 0.5rem 0;
+		}
+
+		.buy-btn {
+			background: linear-gradient(45deg, #8B0000, #A52A2A);
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 6px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-weight: bold;
+		}
+
+		.buy-btn:hover {
+			background: linear-gradient(45deg, #A52A2A, #DC143C);
+			transform: scale(1.05);
+		}
+
+		.store-tagline {
+			font-size: 1.5rem;
+			color: #ffd700;
+			text-align: center;
+			font-style: italic;
+			margin: 2rem 0;
+			text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+			animation: creepyGlow 3s ease-in-out infinite;
+		}
+
+		@keyframes creepyGlow {
+			0%, 100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+			50% { text-shadow: 2px 2px 20px rgba(255,215,0,0.6); }
+		}
+	</style>
+</head>
+<body class="is-ready">
+	<!-- Floating decorative elements -->
+	<div class="floating-bats">
+		<div class="bat">🦇</div>
+		<div class="bat">🦇</div>
+		<div class="bat">🦇</div>
+		<div class="bat">🦇</div>
+		<div class="bat">🦇</div>
+		<div class="ghost">👻</div>
+		<div class="ghost">👻</div>
+	</div>
+	<div id="wrapper">
+		<div id="main">
+			<div class="inner">
+				<header id="header">
+					<div class="container">
+						<h1>The Castle of Shadows</h1>
+						<nav>
+							<ul>
+								<li><a href="#home">Home</a></li>
+								<li><a href="#story">Story</a></li>
+								<li><a href="#characters">Characters</a></li>
+								<li><a href="#villains">Villains</a></li>
+								<li><a href="#quest">The Quest</a></li>
+								<li><a href="#store">Store</a></li>
+								<li><a href="#contact">Contact</a></li>
+							</ul>
+						</nav>
+					</div>
+				</header>
+
+				<!-- Home Section -->
+				<section id="home-section" class="active">
+					<div class="hero">
+						<div class="container">
+							<h1>The Castle of Shadows</h1>
+							<p>Victor, Igor, and Spooky must save their town from the evil who has no face and darkness</p>
+							<p><em>An ancient tale speaks of Mary Shelley's ghost returning to the castle...</em></p>
+							<a href="#story" class="btn">Begin the Tale</a>
+						</div>
+					</div>
+				</section>
+
+				<!-- Story Section -->
+				<section id="story-section" class="inactive">
+					<div class="container">
+						<h2>The Ancient Tale</h2>
+						<div class="story-section">
+							<h3>The Prophecy Unfolds</h3>
+							<img src="assets/images/tale_mary.jpg" alt="Mary Shelley's Tale" class="story-image" />
+							<p>In the shadow of an ancient castle, where darkness dwells and evil takes form without face, three unlikely heroes must rise to save their town from impending doom.</p>
+							
+							<p>Victor, the brave leader with a heart of steel, Igor, the clever strategist with ancient knowledge, and Spooky, the mysterious guardian with supernatural abilities, find themselves bound by destiny when an ancient evil stirs.</p>
+
+							<p>The legend speaks of Mary Shelley's ghost, the creator of monsters, returning to her castle to unleash the faceless evil upon the world. Only those pure of heart and strong of will can stand against the darkness that threatens to consume everything.</p>
+
+							<p><strong>But time is running out...</strong> The evil grows stronger with each passing day, and the town's fate hangs in the balance. Will our heroes find the strength to overcome the darkness, or will the faceless evil claim victory?</p>
+						</div>
+					</div>
+				</section>
+
+				<!-- Villains Section -->
+				<section id="villains-section" class="inactive">
+					<div class="container">
+						<h2>The Forces of Darkness</h2>
+						<div class="story-section">
+							<p>Our heroes face not just one enemy, but a triumvirate of terror that threatens to plunge Spookyville into eternal darkness.</p>
+						</div>
+
+						<div style="display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem;">
+							<div class="villain-card">
+								<img src="assets/images/the_evil.jpg" alt="The Ancient Evil" />
+								<h3 style="color: #ff4757;">The Ancient Evil</h3>
+								<p><strong>The Primordial Darkness</strong></p>
+								<p>A malevolent force that has slumbered beneath the earth for millennia, the Ancient Evil feeds on despair, fear, and hopelessness. It seeks to return the world to the primordial darkness from which it came, extinguishing all light and life.</p>
+								<p>Its power grows with every moment of despair, every tear shed in fear, every heart that loses hope. The Ancient Evil does not merely destroy - it corrupts, turning light into shadow and love into hatred.</p>
+								<p><em>"From darkness we came, and to darkness all shall return..."</em></p>
+							</div>
+
+							<div class="villain-card">
+								<img src="assets/images/faceless_villain.jpg" alt="The Faceless Terror" />
+								<h3 style="color: #ff4757;">The Faceless Terror</h3>
+								<p><strong>The Shapeless Horror</strong></p>
+								<p>Without face, without form, without mercy - the Faceless Terror is pure malevolence given shape. It stalks through nightmares and whispers through shadows, feeding on the terror of those who dare to look upon its ever-shifting form.</p>
+								<p>The Faceless Terror cannot be reasoned with, cannot be bargained with, cannot be understood by mortal minds. It exists only to spread fear and chaos, leaving madness in its wake.</p>
+								<p><em>"Look upon me and know despair, for I am the fear that has no name..."</em></p>
+							</div>
+
+							<div class="villain-card">
+								<img src="assets/images/tale_mary.jpg" alt="Mary Shelley's Ghost" />
+								<h3 style="color: #ff4757;">Mary Shelley's Ghost</h3>
+								<p><strong>The Tormented Author</strong></p>
+								<p>The ghost of the great Mary Shelley, creator of Frankenstein, has been twisted by dark magic into a guardian of the castle's terrible secrets. Once a brilliant mind that gave birth to modern horror, she now serves as the final barrier protecting the forces of evil.</p>
+								<p>Bound by supernatural chains to defend the Ancient Evil and the Faceless Terror, Mary Shelley's spirit yearns for freedom but cannot break the dark bonds that hold her. Only by showing her the power of creation over destruction can our heroes hope to free her tortured soul.</p>
+								<p><em>"I created monsters in fiction... now I am cursed to guard real ones..."</em></p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Characters Section -->
+				<section id="characters-section" class="inactive">
+					<div class="container">
+						<h2>Our Heroes</h2>
+						<div class="characters-grid">
+							<div class="character-card">
+								<img src="assets/images/victor.jpg" alt="Victor" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNDQ0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPldBSVRJTkcgSU1BR0U8L3RleHQ+PC9zdmc+'"/>
+								<h3>Victor</h3>
+								<p><strong>The Brave Leader</strong></p>
+								<p>Victor leads the charge against the darkness with unwavering courage and a heart of gold. His determination and leadership skills make him the natural choice to guide the group through their perilous quest.</p>
+								<p><em>"We will not let evil prevail on our watch!"</em></p>
+							</div>
+
+							<div class="character-card">
+								<img src="assets/images/igor.jpg" alt="Igor" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNDQ0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPldBSVRJTkcgSU1BR0U8L3RleHQ+PC9zdmc+'"/>
+								<h3>Igor</h3>
+								<p><strong>The Ancient Scholar</strong></p>
+								<p>Igor possesses vast knowledge of ancient texts and forgotten spells. His wisdom and strategic mind are crucial in understanding the true nature of their supernatural enemy and finding ways to defeat it.</p>
+								<p><em>"The old texts speak of a way to banish the faceless one..."</em></p>
+							</div>
+
+							<div class="character-card">
+								<img src="assets/images/spooky.jpg" alt="Spooky" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNDQ0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPldBSVRJTkcgSU1BR0U8L3RleHQ+PC9zdmc+'"/>
+								<h3>Spooky</h3>
+								<p><strong>The Mysterious Guardian</strong></p>
+								<p>Spooky bridges the world between the living and the supernatural. With mysterious powers and an ethereal connection to the spirit realm, they serve as the group's guardian against dark forces.</p>
+								<p><em>"I sense the presence of Mary Shelley's spirit..."</em></p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Quest Section -->
+				<section id="quest-section" class="inactive">
+					<div class="container">
+						<h2>The Quest</h2>
+						<div class="story-section">
+							<h3>Spookyville in Danger</h3>
+							<img src="assets/images/spookyville.jpg" alt="Spookyville Town" class="story-image" />
+							<p>The peaceful town of Spookyville now stands at the brink of eternal darkness. Its cobblestone streets and quaint houses, once filled with warmth and laughter, now tremble under the shadow of approaching evil.</p>
+						</div>
+
+						<div class="story-section">
+							<h3>The Challenge Awaits</h3>
+							<p>Our three heroes must navigate through:</p>
+							<ul style="margin: 1rem 0 1rem 2rem;">
+								<li>The haunted corridors of Mary Shelley's castle</li>
+								<li>Facing the Ancient Evil that seeks to consume all light</li>
+								<li>Confronting the Faceless Terror without mercy</li>
+								<li>Battling the ghost of literature's most famous monster creator</li>
+								<li>Protecting Spookyville from eternal darkness</li>
+								<li>Discovering the ancient secret that can banish evil forever</li>
+							</ul>
+
+							<h3>The Villains They Must Face</h3>
+							<p>The heroes must confront not one, but multiple forces of darkness:</p>
+							<ul style="margin: 1rem 0 1rem 2rem;">
+								<li><strong>The Ancient Evil</strong> - A primordial darkness that feeds on despair and seeks to plunge the world into eternal night</li>
+								<li><strong>The Faceless Terror</strong> - A shapeless horror without face or mercy, embodying pure malevolence</li>
+								<li><strong>Mary Shelley's Ghost</strong> - The tormented spirit of the great author, twisted by dark magic into a guardian of evil</li>
+							</ul>
+
+							<h3>The Stakes</h3>
+							<p>If Victor, Igor, and Spooky fail in their mission, Spookyville will be consumed by darkness and the combined forces of evil will spread across the land, turning day into eternal night and hope into despair.</p>
+
+							<p><strong>But if they succeed...</strong> The light will return to Spookyville, Mary Shelley's spirit will find peace, the Ancient Evil will be banished, and the Faceless Terror will be defeated once and for all.</p>
+						</div>
+
+						<div class="story-section">
+							<h3>Mary Shelley's Castle</h3>
+							<p>The ancient castle where it all began stands as both sanctuary and prison. Within its walls, Mary Shelley's ghost guards terrible secrets while the Ancient Evil and Faceless Terror grow stronger.</p>
+							<p>Legend says that only those who understand both the power of creation and destruction can enter the castle and emerge victorious. Our heroes must be prepared for anything...</p>
+						</div>
+					</div>
+				</section>
+
+				<!-- Store Section -->
+				<section id="store-section" class="inactive">
+					<div class="container">
+						<h2>The Spooky Gift Shop</h2>
+						<p class="store-tagline">"Foolish mortals, don't you know all journeys must end at the gift shop"</p>
+						
+						<div class="store-grid">
+							<div class="product-card">
+								<div class="product-image">🦇</div>
+								<h3>Victor's Courage Medallion</h3>
+								<p>Channel Victor's bravery with this mystical medallion. Perfect for facing your own faceless fears.</p>
+								<div class="product-price">$19.99</div>
+								<button class="buy-btn">Add to Cart</button>
+							</div>
+							
+							<div class="product-card">
+								<div class="product-image">📚</div>
+								<h3>Igor's Ancient Wisdom Book</h3>
+								<p>Replica of Igor's mystical tome filled with spells and ancient knowledge (prop only - no real magic).</p>
+								<div class="product-price">$34.99</div>
+								<button class="buy-btn">Add to Cart</button>
+							</div>
+							
+							<div class="product-card">
+								<div class="product-image">👻</div>
+								<h3>Spooky's Guardian Cloak</h3>
+								<p>Mysterious hooded cloak that shimmers between the worlds of living and spirit. One size fits most.</p>
+								<div class="product-price">$49.99</div>
+								<button class="buy-btn">Add to Cart</button>
+							</div>
+							
+							<div class="product-card">
+								<div class="product-image">🏰</div>
+								<h3>Castle of Shadows Snow Globe</h3>
+								<p>Miniature replica of Mary Shelley's haunted castle. Shake to summon swirling mists and tiny bats!</p>
+								<div class="product-price">$24.99</div>
+								<button class="buy-btn">Add to Cart</button>
+							</div>
+							
+							<div class="product-card">
+								<div class="product-image">🎭</div>
+								<h3>Faceless Terror Mask</h3>
+								<p>Become the nightmare! This shifting, ever-changing mask captures the horror of the Faceless Terror.</p>
+								<div class="product-price">$39.99</div>
+								<button class="buy-btn">Add to Cart</button>
+							</div>
+							
+							<div class="product-card">
+								<div class="product-image">⚡</div>
+								<h3>Ancient Evil Energy Crystal</h3>
+								<p>Glowing replica crystal that contains the "essence" of the Ancient Evil (just LED lights, totally safe).</p>
+								<div class="product-price">$29.99</div>
+								<button class="buy-btn">Add to Cart</button>
+							</div>
+							
+							<div class="product-card">
+								<div class="product-image">🖋️</div>
+								<h3>Mary Shelley's Quill Set</h3>
+								<p>Elegant quill pen and inkwell set. Write your own monster stories with the spirit of literary genius!</p>
+								<div class="product-price">$44.99</div>
+								<button class="buy-btn">Add to Cart</button>
+							</div>
+							
+							<div class="product-card">
+								<div class="product-image">🏘️</div>
+								<h3>Spookyville Town Model Kit</h3>
+								<p>Build your own miniature Spookyville! Complete with tiny Victor, Igor, and Spooky figurines.</p>
+								<div class="product-price">$59.99</div>
+								<button class="buy-btn">Add to Cart</button>
+							</div>
+							
+							<div class="product-card">
+								<div class="product-image">📺</div>
+								<h3>Complete Series Box Set</h3>
+								<p>All episodes of "The Castle of Shadows" on DVD, plus behind-the-scenes content and director's commentary.</p>
+								<div class="product-price">$79.99</div>
+								<button class="buy-btn">Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Contact Section -->
+				<section id="contact-section" class="inactive">
+					<div class="container">
+						<h2>Join the Adventure</h2>
+						<div class="story-section">
+							<p>Want to be part of Victor, Igor, and Spooky's quest? Stay tuned for updates on this thrilling supernatural adventure!</p>
+							
+							<div id="smartblock-placeholder-wrapper">
+								<div id="smartblock-placeholder-title">Stay Connected</div>
+								<div id="smartblock-placeholder-desc">Get updates on the heroes' quest</div>
+								<button id="smartblock-placeholder-button">Follow the Adventure</button>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<footer id="footer">
+			<div class="container">
+				<p>&copy; 2024 The Castle of Shadows - A Tale of Victor, Igor & Spooky</p>
+				<p><em>"In darkness, heroes are born"</em></p>
+			</div>
+		</footer>
+	</div>
+
+	<script>
+		// Simple navigation script
+		document.addEventListener('DOMContentLoaded', function() {
+			const navLinks = document.querySelectorAll('nav a');
+			const sections = document.querySelectorAll('section');
+
+			navLinks.forEach(link => {
+				link.addEventListener('click', function(e) {
+					e.preventDefault();
+					const targetId = this.getAttribute('href').substring(1) + '-section';
+					
+					// Hide all sections
+					sections.forEach(section => {
+						section.classList.remove('active');
+						section.classList.add('inactive');
+					});
+
+					// Show target section
+					const targetSection = document.getElementById(targetId);
+					if (targetSection) {
+						targetSection.classList.remove('inactive');
+						targetSection.classList.add('active');
+					}
+
+					// Update URL hash
+					window.location.hash = this.getAttribute('href');
+				});
+			});
+
+			// Handle direct hash navigation
+			function showSectionFromHash() {
+				const hash = window.location.hash || '#home';
+				const targetId = hash.substring(1) + '-section';
+				
+				sections.forEach(section => {
+					section.classList.remove('active');
+					section.classList.add('inactive');
+				});
+
+				const targetSection = document.getElementById(targetId);
+				if (targetSection) {
+					targetSection.classList.remove('inactive');
+					targetSection.classList.add('active');
+				}
+			}
+
+			// Listen for hash changes
+			window.addEventListener('hashchange', showSectionFromHash);
+			
+			// Initial load
+			showSectionFromHash();
+		});
+	</script>
+</body>
+</html>
